@@ -70,33 +70,36 @@ jobs:
           echo "✅ Production deployment completed"
           echo "📦 Version: $(cat package.json | python -c 'import sys, json; print(json.load(sys.stdin)["version"])')"
 
-  # Branch Management
-  branch-management:
-    name: Branch Management
-    runs-on: ubuntu-latest
-    needs: quality-gates
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Update development branch
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git fetch origin development
-          git checkout development
-          git merge main --no-edit
-          git push origin development
-          echo "✅ Development branch updated with main"
-
-      - name: Update staging branch
-        run: |
-          git fetch origin staging
-          git checkout staging
-          git merge main --no-edit
-          git push origin staging
-          echo "✅ Staging branch updated with main"
+  # Branch Management - Optional: Uncomment if you want automated branch syncing
+  # Note: Requires workflow permissions to be set to "Read and write" in repo settings
+  # branch-management:
+  #   name: Branch Management
+  #   runs-on: ubuntu-latest
+  #   needs: quality-gates
+  #   if: github.ref == 'refs/heads/main'
+  #   permissions:
+  #     contents: write
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
+  #         token: ${{ secrets.GITHUB_TOKEN }}
+  #
+  #     - name: Update development branch
+  #       run: |
+  #         git config --local user.email "action@github.com"
+  #         git config --local user.name "GitHub Action"
+  #         git fetch origin development
+  #         git checkout development
+  #         git merge main --no-edit
+  #         git push origin development
+  #         echo "✅ Development branch updated with main"
+  #
+  #     - name: Update staging branch
+  #       run: |
+  #         git fetch origin staging
+  #         git checkout staging
+  #         git merge main --no-edit
+  #         git push origin staging
+  #         echo "✅ Staging branch updated with main"
