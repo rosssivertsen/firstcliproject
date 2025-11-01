@@ -1,0 +1,30 @@
+{
+  "name": "firstcliproject",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "First CLI Project with enterprise automation",
+  "scripts": {
+    "dev": "echo 'Development server not yet configured'",
+    "build": "echo 'Build process not yet configured'",
+    "lint": "echo 'Linting not yet configured'",
+    "test": "echo 'Tests not yet configured'",
+    "security": "npm audit --audit-level=moderate",
+    "deploy:staging": "./scripts/deploy.sh staging development",
+    "deploy:production": "./scripts/deploy.sh production main",
+    "promote:staging": "git checkout staging && git merge development && git push origin staging",
+    "promote:production": "git checkout main && git merge staging && git push origin main",
+    "promote:direct": "git checkout main && git merge development && git push origin main",
+    "pipeline:full": "npm run promote:staging && npm run promote:production",
+    "pipeline:direct": "npm run promote:direct",
+    "deploy": "./scripts/deploy.sh",
+    "setup": "./scripts/configure-project.sh"
+  },
+  "keywords": [
+    "cli",
+    "automation",
+    "enterprise"
+  ],
+  "author": "Ross Sivertsen",
+  "license": "MIT"
+}
